@@ -22,11 +22,11 @@ bullet_active = False
 
 running = True
 while running:
-    for event in pygame.event.get(): # montre tt la liste un par un (for)
+    for event in pygame.event.get(): 
         if event.type == pygame.QUIT: # si le player clique sur *
             running = False
 
-    keys = pygame.key.get_pressed()  # pour on peux bouger le player dans les 4 direction
+    keys = pygame.key.get_pressed()  #  dans les 4 direction
     if keys[pygame.K_RIGHT]:
         player_x = player_x + speed
     if keys[pygame.K_LEFT]:
@@ -36,7 +36,7 @@ while running:
     if keys[pygame.K_DOWN]:
         player_y = player_y + speed
 
-    if player_x > 800 - player_size: # pour ne depasser pas le bord de windwz
+    if player_x > 800 - player_size: # le bord de windwz
         player_x = 800 - player_size
     if player_x < 0:    # le côté gauche est sorti de la fenêtre
         player_x = 0      # on le remet pile sur le bord gauche
