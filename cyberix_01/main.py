@@ -5,7 +5,7 @@ pygame.display.set_caption("CyberiX")
 clock = pygame.time.Clock()
 
 player_x = 400
-player_y = 300
+player_y = 300              
 player_size = 50
 speed = 5 # la vitesse de player
 
@@ -59,9 +59,6 @@ while running:
     monster_x = monster_x + monster_speed    # combien la vitesse qui le monster bouge
     if monster_x > 800 - monster_size or monster_x < 0: # verfiction si il depasse le bord ou touche 
         monster_speed = -monster_speed      # le demi-tour
-
-
-
 
     screen.fill((180, 180, 180))  # color de windz
     pygame.draw.rect(screen, (0, 0, 0), (player_x, player_y, player_size, player_size)) # x,y,largeur,hauteur
