@@ -12,7 +12,7 @@ speed = 5 # la vitesse de player
 monster_x = 100
 monster_y = 50
 monster_size = 50
-monster_speed = 3 # vitesse de monster
+monster_speed = 3 # vitesse de monste
 
 bullet_x = 0
 bullet_y = 0
