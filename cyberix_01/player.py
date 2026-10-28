@@ -5,7 +5,8 @@ class Player:
         self.y = y
         self.size = size
         self.speed = speed
-        self.dir_x = 0                       # direction regardee 
+        self.dir_x = 1  
+        self.dir_y = 0                   # direction 
 
     def handle_input(self, keys):            # le mouvement du player
         dx = 0

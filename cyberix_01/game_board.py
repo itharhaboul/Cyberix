@@ -3,7 +3,7 @@ from player import Player
 from monster import Monster
 from bullet import Bullet
 
-def overlaps(ax, ay, a_size, bx, by, b_size):      # to control if bullets touch the monster(it depends abouht health,scors..)
+def overlaps(ax, ay, a_size, bx, by, b_size):      # NOUVEAU : fonction placée avant la classe
     return (ax < bx + b_size and ax + a_size > bx
             and ay < by + b_size and ay + a_size > by)
 
@@ -18,10 +18,9 @@ class GameBoard:
         self.running = True
         self.score = 0
         self.font = pygame.font.Font(None, 30)
-
-# create objects from  classes
+# create objects from another classes
         self.player = Player(400, 300, 50, 5)
-        self.monster = Monster(100, 50, 50, 3, 2)       
+        self.monster = Monster(100, 50, 50, 3, 2)       # CHANGÉ : 5 valeurs (vitesse x = 3, vitesse y = 2)
         self.bullet = Bullet(10, 10)
 
     def handle_events(self):
@@ -35,19 +34,20 @@ class GameBoard:
         self.player.keep_inside(self.width, self.height)
 
         if keys[pygame.K_SPACE] and not self.bullet.active:
-            start_x = self.player.x + self.player.size // 2 - self.bullet.size // 2    
-            start_y = self.player.y + self.player.size // 2 - self.bullet.size // 2    
-            self.bullet.fire(start_x, start_y, self.player.dir_x, self.player.dir_y)   
+            start_x = self.player.x + self.player.size // 2 - self.bullet.size // 2    # NOUVEAU : la balle part du centre
+            start_y = self.player.y + self.player.size // 2 - self.bullet.size // 2    # NOUVEAU
+            self.bullet.fire(start_x, start_y, self.player.dir_x, self.player.dir_y)   # CHANGÉ : on donne la direction
 
-        self.bullet.update(self.width, self.height)     
-        self.monster.update(self.width, self.height)    
-        if self.bullet.active and overlaps(self.bullet.x, self.bullet.y, self.bullet.size,    
+        self.bullet.update(self.width, self.height)     # CHANGÉ : on donne la taille de la fenêtre
+        self.monster.update(self.width, self.height)    # CHANGÉ : idem
+        if self.bullet.active and overlaps(self.bullet.x, self.bullet.y, self.bullet.size,    # NOUVEAU : toute cette partie
             self.monster.x, self.monster.y, self.monster.size):
             self.bullet.active = False                  # la balle disparaît
             self.monster.hit()                          # le monstre perd 1 de vie
-            if self.monster.health <= 0:                
+            if self.monster.health <= 0:                # mort
                 self.score = self.score + 1
                 self.monster.respawn()
+
 
     def draw(self):
         self.screen.fill((180, 180, 180))
@@ -57,6 +57,7 @@ class GameBoard:
         score_text = self.font.render( f"Score: {self.score}", True, (0, 0, 0) )
         self.screen.blit( score_text, (self.width - score_text.get_width() - 15, 15) )
         pygame.display.flip()
+
 
     def run(self):
         while self.running:
