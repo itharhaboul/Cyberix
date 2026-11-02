@@ -1,9 +1,6 @@
 #  CyberiX
-
-**CyberiX** is a 2D shooting game developed using **Python and Pygame**.
-
 >  **Status: Work in Progress** 👾
-
+> 
 > CyberiX is still under development. The current version represents the beginning of the project, and more features, improvements, and gameplay elements will be added in future updates.
 
 ## The Idea🕯️
@@ -34,11 +31,6 @@ The project is still evolving. Planned improvements include:
 ##  Author
 
 ** ITHAR HABOUL🕊️ **
-Master 1  Computer Science
-University of Bouira.
-
----
 
 *CyberiX — A mystery hidden inside an abandoned research center.*
 
-**More updates coming soon...**
