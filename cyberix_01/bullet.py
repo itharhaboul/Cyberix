@@ -1,10 +1,11 @@
 import pygame
 class Bullet:
-    def __init__(self, size, speed):
+    def __init__(self, size, speed,damage=1):
         self.x = 0 
         self.y = 0
         self.size = size
         self.speed = speed
+        self.damage = damage
         self.dir_x = 0               # to can manage all direction of bullets
         self.dir_y = -1           
         self.active = False
@@ -31,4 +32,4 @@ class Bullet:
 
     def draw(self, screen):
         if self.active:
-            pygame.draw.rect(screen, (255, 200, 0), (self.x, self.y, self.size, self.size))
+            pygame.draw.rect(screen, (255, 0, 0), (self.x, self.y, self.size, self.size))
