@@ -4,8 +4,7 @@ import pygame
 
 
 class Background:
-    """Décor du laboratoire : dessiné UNE seule fois dans une surface,
-    puis simplement copié à l'écran à chaque image (rapide)."""
+   
 
     def __init__(self, width, height):
         self.width = width
