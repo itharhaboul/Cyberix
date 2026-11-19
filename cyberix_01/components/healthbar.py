@@ -1,4 +1,4 @@
-import pygame
+import pygame    #with srp principe
 class HealthBar:
     def __init__(self, width, height):
         self.width = width
