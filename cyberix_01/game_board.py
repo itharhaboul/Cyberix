@@ -1,8 +1,8 @@
 import pygame
 import math
-from player import Player
-from monster import Monster
-from bullet import Bullet
+from cyberix_01.model.player import Player
+from cyberix_01.model.monster import Monster
+from cyberix_01.model.bullet import Bullet
 from components.healthbar import HealthBar
 from monsters.fast_monster import FastMonster
 from monsters.strong_monster import StrongMonster
@@ -32,6 +32,7 @@ class GameBoard:
         self.player = Player(400, 300, 50, 5)
         self.bullet = Bullet(10, 10)
         self.healthbar = HealthBar(50, 5)
+    #isp principle
         self.monsters = [
             Monster(100, 50, 50, 3, 2),
             FastMonster(200, 100, 50, 3, 2),

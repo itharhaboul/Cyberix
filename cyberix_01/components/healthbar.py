@@ -3,7 +3,7 @@ class HealthBar:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-
+# responsable sur health bar just
     def draw(self, screen, x, y, health, max_health):
         bar_width = int(self.width * health / max_health)
         pygame.draw.rect(

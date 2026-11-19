@@ -1,7 +1,6 @@
-import pygame
 import math 
 from interfaces.shoot import Shootable
-
+# we delete def draw +import pyagame here
 class SecurityMonster(Shootable):
 
     def __init__(self, x, y, size):
@@ -25,16 +24,4 @@ class SecurityMonster(Shootable):
               dir_x,
               dir_y
         )
-    def draw(self, screen):
-      pygame.draw.rect(
-        screen,
-        (50, 50, 50),
-        (self.x, self.y, self.size, self.size)
-         )
-
-      pygame.draw.circle(
-        screen,
-        (255, 0, 0),
-        (self.x + self.size // 2, self.y + self.size // 2),
-        8
-         )
+   

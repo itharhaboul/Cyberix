@@ -1,8 +1,9 @@
 import pygame
 import math
-from monster import Monster
+from model.monster import Monster
 from interfaces.fly import Flyable
 from damage.rules import WeaknessDamage
+
 class FlyingMonster(Monster , Flyable):
  def __init__(self, x, y, size, speed_x, speed_y):
     super().__init__(x, y, size, speed_x, speed_y,damage_rule=WeaknessDamage())

@@ -1,5 +1,5 @@
-from monster import Monster
-from monster import Monster
+from model.monster import Monster
+from model.monster import Monster
 from damage.rules import ResistantDamage        
 
 class StrongMonster(Monster):

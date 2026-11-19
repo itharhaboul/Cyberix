@@ -1,4 +1,4 @@
-from monster import Monster
+from model.monster import Monster
 class FastMonster(Monster):
 
     def __init__(self, x, y, size, speed_x, speed_y):
