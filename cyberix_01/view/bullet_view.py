@@ -70,7 +70,7 @@ class BulletView:
 
         image = pygame.transform.scale(
             image,
-            (bullet.size * 2, bullet.size * 2),
+            (bullet.size * 3, bullet.size * 3),
         )
 
         rect = image.get_rect(
