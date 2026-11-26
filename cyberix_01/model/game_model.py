@@ -1,13 +1,7 @@
 import math
 
 from model.player import Player
-from model.monster import Monster
 from model.bullet import Bullet
-
-from monsters.fast_monster import FastMonster
-from monsters.strong_monster import StrongMonster
-from monsters.flying_monster import FlyingMonster
-from defenses.security_monster import SecurityMonster
 
 
 def overlaps(ax, ay, a_size, bx, by, b_size):
@@ -21,28 +15,39 @@ def overlaps(ax, ay, a_size, bx, by, b_size):
 
 class GameModel:
 
-    def __init__(self, width, height):
+    def __init__(self, width, height, level):
 
         self.width = width
         self.height = height
 
         self.score = 0
+        self.collected_clues = 0
+
+        # Level created by the Builder
+        self.level = level
 
         # Game objects
         self.player = Player(400, 300, 50, 5)
 
         self.bullet = Bullet(10, 10)
 
-        self.monsters = [
-            Monster(100, 50, 50, 3, 2),
-            FastMonster(200, 100, 50, 3, 2),
-            StrongMonster(300, 200, 50, 2, 2),
-            FlyingMonster(500, 100, 50, 2, 2)
-        ]
+        # Normal monsters
+        self.monsters = self.level.monsters
 
-        self.security = SecurityMonster(700, 400, 50)
+        # Security monsters
+        self.security_monsters = self.level.security_monsters
+
+        self.security = (
+            self.security_monsters[0]
+            if self.security_monsters
+            else None
+        )
 
         self.security_bullet = Bullet(10, 7)
+
+        # Investigation system
+        self.nearby_clue = None
+        self.active_clue = None
 
     # Player shooting
     def shoot_player(self):
@@ -66,28 +71,83 @@ class GameModel:
             self.player.dir_y
         )
 
+    # Player investigates nearby evidence
+    def interact(self):
+
+        if self.nearby_clue is None:
+            return
+
+        clue = self.nearby_clue
+
+        if not clue.collected:
+
+            clue.collected = True
+            self.active_clue = clue
+
+            self.collected_clues = sum(
+                1 for item in self.level.clues
+                if item.collected
+            )
+
+    # Close evidence information
+    def close_clue(self):
+
+        self.active_clue = None
+
+    # Detect nearby evidence
+    def detect_nearby_clue(self):
+
+        self.nearby_clue = None
+
+        player_center_x = (
+            self.player.x + self.player.size // 2
+        )
+
+        player_center_y = (
+            self.player.y + self.player.size // 2
+        )
+
+        for clue in self.level.clues:
+
+            if clue.collected:
+                continue
+
+            dx = player_center_x - clue.x
+            dy = player_center_y - clue.y
+
+            distance = math.hypot(dx, dy)
+
+            if distance < 85:
+
+                self.nearby_clue = clue
+                break
+
     # Update game logic
     def update(self):
 
         self.bullet.update(self.width, self.height)
 
         # SecurityMonster detects the player
-        dx = self.player.x - self.security.x
-        dy = self.player.y - self.security.y
+        if self.security is not None:
 
-        distance = math.hypot(dx, dy)
+            dx = self.player.x - self.security.x
+            dy = self.player.y - self.security.y
 
-        if distance < 250 and not self.security_bullet.active:
+            distance = math.hypot(dx, dy)
 
-            self.security.shoot(
-                self.security_bullet,
-                self.player.x + self.player.size // 2,
-                self.player.y + self.player.size // 2
-            )
+            if distance < 250 and not self.security_bullet.active:
 
-        self.security_bullet.update(self.width, self.height)
+                self.security.shoot(
+                    self.security_bullet,
+                    self.player.x + self.player.size // 2,
+                    self.player.y + self.player.size // 2
+                )
 
-        # Update all monsters
+        self.security_bullet.update(
+            self.width, self.height
+        )
+
+        # Update normal monsters
         for monster in self.monsters:
             monster.update(self.width, self.height)
 
@@ -95,8 +155,12 @@ class GameModel:
         for monster in self.monsters:
 
             if self.bullet.active and overlaps(
-                self.bullet.x, self.bullet.y, self.bullet.size,
-                monster.x, monster.y, monster.size
+                self.bullet.x,
+                self.bullet.y,
+                self.bullet.size,
+                monster.x,
+                monster.y,
+                monster.size
             ):
 
                 self.bullet.active = False
@@ -108,3 +172,9 @@ class GameModel:
                     monster.respawn()
 
                 break
+
+        # Investigation system
+        if self.active_clue is None:
+            self.detect_nearby_clue()
+        else:
+            self.nearby_clue = None

@@ -5,12 +5,12 @@ from pathlib import Path
 
 class Background:
 
-    def __init__(self, width, height):
+    def __init__(self, width, height, image_name="laboratory.png"):
 
         project_path = Path(__file__).resolve().parents[1]
 
         image_path = (
-            project_path / "assets" / "backgrounds" / "laboratory.png"
+            project_path / "assets" / "backgrounds" / image_name
         )
 
         self.image = pygame.image.load(
